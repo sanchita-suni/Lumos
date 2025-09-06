@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "extends": "@react-native/typescript-config",
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["**/node_modules", "**/Pods"]
+=======
+  "extends": "@react-native/typescript-config/tsconfig.json"
+>>>>>>> 8b86830102f1727adcd26bd30b9e6ab09f0b43ff
 }

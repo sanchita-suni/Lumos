@@ -1,3 +1,7 @@
 <resources>
+<<<<<<< HEAD
     <string name="app_name">inferentia</string>
+=======
+    <string name="app_name">Hello App Display Name</string>
+>>>>>>> 8b86830102f1727adcd26bd30b9e6ab09f0b43ff
 </resources>

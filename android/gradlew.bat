@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 @REM Copyright (c) Meta Platforms, Inc. and affiliates.
 @REM
 @REM This source code is licensed under the MIT license found in the
 @REM LICENSE file in the root directory of this source tree.
 
+=======
+>>>>>>> 8b86830102f1727adcd26bd30b9e6ab09f0b43ff
 @rem
 @rem Copyright 2015 the original author or authors.
 @rem
@@ -18,8 +21,11 @@
 @rem See the License for the specific language governing permissions and
 @rem limitations under the License.
 @rem
+<<<<<<< HEAD
 @rem SPDX-License-Identifier: Apache-2.0
 @rem
+=======
+>>>>>>> 8b86830102f1727adcd26bd30b9e6ab09f0b43ff
 
 @if "%DEBUG%"=="" @echo off
 @rem ##########################################################################
@@ -50,11 +56,19 @@ set JAVA_EXE=java.exe
 %JAVA_EXE% -version >NUL 2>&1
 if %ERRORLEVEL% equ 0 goto execute
 
+<<<<<<< HEAD
 echo. 1>&2
 echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH. 1>&2
 echo. 1>&2
 echo Please set the JAVA_HOME variable in your environment to match the 1>&2
 echo location of your Java installation. 1>&2
+=======
+echo.
+echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
+echo.
+echo Please set the JAVA_HOME variable in your environment to match the
+echo location of your Java installation.
+>>>>>>> 8b86830102f1727adcd26bd30b9e6ab09f0b43ff
 
 goto fail
 
@@ -64,22 +78,38 @@ set JAVA_EXE=%JAVA_HOME%/bin/java.exe
 
 if exist "%JAVA_EXE%" goto execute
 
+<<<<<<< HEAD
 echo. 1>&2
 echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME% 1>&2
 echo. 1>&2
 echo Please set the JAVA_HOME variable in your environment to match the 1>&2
 echo location of your Java installation. 1>&2
+=======
+echo.
+echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME%
+echo.
+echo Please set the JAVA_HOME variable in your environment to match the
+echo location of your Java installation.
+>>>>>>> 8b86830102f1727adcd26bd30b9e6ab09f0b43ff
 
 goto fail
 
 :execute
 @rem Setup the command line
 
+<<<<<<< HEAD
 set CLASSPATH=
 
 
 @rem Execute Gradle
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" -jar "%APP_HOME%\gradle\wrapper\gradle-wrapper.jar" %*
+=======
+set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar
+
+
+@rem Execute Gradle
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %*
+>>>>>>> 8b86830102f1727adcd26bd30b9e6ab09f0b43ff
 
 :end
 @rem End local scope for the variables with windows NT shell
