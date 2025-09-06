@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import { View, Text, Button, StyleSheet, SafeAreaView, StatusBar, useColorScheme } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -13,12 +14,76 @@ const AppContent = () => {
     <SafeAreaView style={[styles.container, { paddingTop: safeAreaInsets.top }]}>
       {/* The main component from your teammate's project */}
       <ObjectDetector />
+=======
+// App.tsx
 
-      {/* This is your test component at the bottom */}
-      <View style={styles.testBox}>
-        <Text style={styles.testText}>Test Translation:</Text>
-        <Text style={styles.testText}>{t('welcome_message')}</Text>
-        <View style={styles.buttons}>
+import React, { useState } from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  StatusBar,
+  Button,
+} from 'react-native';
+import { useTranslation } from 'react-i18next';
+import './i18n'; // Make sure this is here from your setup!
+
+// Assuming these are your teammate's components and modules
+import { ObjectDetector } from './src/components/ObjectDetector';
+import { describeSmart } from './ai/smartSwitch';
+// You would also import from San and Tan, but we will start with the smartSwitch for now.
+
+const App = () => {
+  const { t, i18n } = useTranslation();
+  const [descriptionText, setDescriptionText] = useState('Tap to get a description.');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState('en');
+  const [isConnected, setIsConnected] = useState(false);
+
+  // This is a placeholder for the function that will handle button presses.
+  const handleDescribePress = async () => {
+    console.log('Button pressed!');
+    setIsProcessing(true);
+    // This is where you would call the describeSmart function with the image and language.
+    // Since we don't have the image from San's module yet, we will simulate the call.
+    try {
+      const simulatedDetections = ['car', 'person', 'car']; // Placeholder from San's module
+      const result = await describeSmart(simulatedDetections, currentLanguage);
+      setDescriptionText(result);
+    } catch (error) {
+      console.error('Error during description:', error);
+      setDescriptionText('Sorry, something went wrong.');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" />
+>>>>>>> 34a1c717434dad3a3241112a0e8947330abcffb2
+
+      {/* This is your teammate's main component, currently a placeholder */}
+      {/* <ObjectDetector /> */}
+
+      {/* This is your original UI shell component, now integrated */}
+      <View style={styles.content}>
+        <Text style={styles.description}>
+          {descriptionText}
+        </Text>
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleDescribePress}
+          disabled={isProcessing}>
+          <Text style={styles.buttonText}>
+            {isProcessing ? 'Thinking...' : t('tap_to_describe')}
+          </Text>
+        </TouchableOpacity>
+        <View style={styles.languageButtons}>
           <Button title="English" onPress={() => i18n.changeLanguage('en')} />
           <Button title="Hindi" onPress={() => i18n.changeLanguage('hi')} />
           <Button title="Kannada" onPress={() => i18n.changeLanguage('kn')} />
@@ -27,6 +92,7 @@ const AppContent = () => {
     </SafeAreaView>
   );
 };
+<<<<<<< HEAD
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -37,10 +103,13 @@ const App = () => {
     </SafeAreaProvider>
   );
 };
+=======
+>>>>>>> 34a1c717434dad3a3241112a0e8947330abcffb2
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+<<<<<<< HEAD
     backgroundColor: '#000', // Kept your teammate's background color
   },
   testBox: {
@@ -48,22 +117,53 @@ const styles = StyleSheet.create({
     bottom: 50,
     left: 20,
     right: 20,
+=======
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+>>>>>>> 34a1c717434dad3a3241112a0e8947330abcffb2
     padding: 20,
-    backgroundColor: '#f0f0f0',
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 10,
   },
-  testText: {
-    fontSize: 18,
+  description: {
+    fontSize: 24,
     textAlign: 'center',
-    marginBottom: 10,
-    color: '#000', // Set text color to be visible
+    color: 'white',
+    fontWeight: '600',
   },
-  buttons: {
+  buttonContainer: {
+    marginBottom: 50,
+  },
+  button: {
+    backgroundColor: '#007AFF',
+    paddingVertical: 15,
+    paddingHorizontal: 40,
+    borderRadius: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  languageButtons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    marginTop: 20,
+    width: '100%',
   },
 });
 
+<<<<<<< HEAD
 export default App;
+=======
+export default App;
+>>>>>>> 34a1c717434dad3a3241112a0e8947330abcffb2
