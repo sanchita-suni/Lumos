@@ -1,0 +1,21 @@
+{
+  "brand.tagline": "Illuminating the world, through sound.",
+  "ui.startAlerts": "Start Alerts",
+  "ui.stopAlerts": "Stop Alerts",
+  "ui.describe": "Describe",
+  "ui.language": "Language",
+  "ui.currentLanguage": "Current language: {{lang}}",
+  "speech.ready": "Lumos ready.",
+  "speech.detected": "{{thing}} ahead.",
+  "speech.noObject": "No key objects detected.",
+  "label.vehicle": "vehicle",
+  "label.bus": "bus",
+  "label.car": "car",
+  "label.person": "person",
+  "label.dog": "dog",
+  "label.traffic_light": "traffic light",
+  "label.stop_sign": "stop sign",
+  "label.bicycle": "bicycle",
+  "label.motorcycle": "motorcycle",
+  "label.obstacle": "obstacle"
+}
