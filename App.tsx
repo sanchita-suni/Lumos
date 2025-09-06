@@ -1,3 +1,4 @@
+// App.tsx
 import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
@@ -11,18 +12,17 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-// Correct path to i18n setup, but you will now import the initI18n function.
-import { initI18n } from './src/i18n/i18n';
 
-// Teammate’s component
+import { initI18n } from './src/i18n/i18n';
 import { ObjectDetector } from './src/components/ObjectDetector';
-// AI smart switch
 import { describeSmart } from './src/ai/smartSwitch';
+import { fetchOnlineDescription } from './src/ai/onlineDescriber';
 
 const AppContent = () => {
   const { t, i18n } = useTranslation();
   const safeAreaInsets = useSafeAreaInsets();
   const isDarkMode = useColorScheme() === 'dark';
+
   const [descriptionText, setDescriptionText] = useState('Tap to get a description.');
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState('en');
@@ -32,12 +32,17 @@ const AppContent = () => {
     setIsProcessing(true);
 
     try {
-      // Placeholder detections (replace with ObjectDetector output later)
+      // Get simulated detections from ObjectDetector
       const simulatedDetections = ['car', 'person', 'car'];
-      const result = await describeSmart(simulatedDetections, currentLanguage);
-      setDescriptionText(result);
+      const smartResult = await describeSmart(simulatedDetections, currentLanguage);
+
+      // Get online description from test image
+      const testImage = 'data:image/jpeg;base64,...';
+      const onlineResult = await fetchOnlineDescription(testImage, currentLanguage);
+
+      setDescriptionText(`${smartResult}\n${onlineResult}`);
     } catch (error) {
-      console.error('Error during description:', error);
+      console.error('Error fetching description:', error);
       setDescriptionText('Sorry, something went wrong.');
     } finally {
       setIsProcessing(false);
@@ -48,10 +53,10 @@ const AppContent = () => {
     <SafeAreaView style={[styles.container, { paddingTop: safeAreaInsets.top }]}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
 
-      {/* Teammate’s camera component */}
-      {/* <ObjectDetector /> */}
+      {/* Camera / Object detection component */}
+      <ObjectDetector />
 
-      {/* Description text */}
+      {/* Description */}
       <View style={styles.content}>
         <Text style={styles.description}>{descriptionText}</Text>
       </View>
@@ -61,7 +66,8 @@ const AppContent = () => {
         <TouchableOpacity
           style={styles.button}
           onPress={handleDescribePress}
-          disabled={isProcessing}>
+          disabled={isProcessing}
+        >
           <Text style={styles.buttonText}>
             {isProcessing ? 'Thinking...' : t('tap_to_describe')}
           </Text>
@@ -69,9 +75,27 @@ const AppContent = () => {
 
         {/* Language switching */}
         <View style={styles.languageButtons}>
-          <Button title="English" onPress={() => { setCurrentLanguage('en'); i18n.changeLanguage('en'); }} />
-          <Button title="Hindi" onPress={() => { setCurrentLanguage('hi'); i18n.changeLanguage('hi'); }} />
-          <Button title="Kannada" onPress={() => { setCurrentLanguage('kn'); i18n.changeLanguage('kn'); }} />
+          <Button
+            title="English"
+            onPress={() => {
+              i18n.changeLanguage('en');
+              setCurrentLanguage('en');
+            }}
+          />
+          <Button
+            title="Hindi"
+            onPress={() => {
+              i18n.changeLanguage('hi');
+              setCurrentLanguage('hi');
+            }}
+          />
+          <Button
+            title="Kannada"
+            onPress={() => {
+              i18n.changeLanguage('kn');
+              setCurrentLanguage('kn');
+            }}
+          />
         </View>
       </View>
     </SafeAreaView>
@@ -99,7 +123,7 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000', // black background
+    backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -116,8 +140,9 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   buttonContainer: {
-    marginBottom: 50,
+    width: '100%',
     alignItems: 'center',
+    marginBottom: 50,
   },
   button: {
     backgroundColor: '#007AFF',
@@ -129,6 +154,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    marginBottom: 15,
   },
   buttonText: {
     color: 'white',
@@ -138,7 +164,7 @@ const styles = StyleSheet.create({
   languageButtons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 20,
+    marginTop: 10,
     width: '100%',
   },
 });
