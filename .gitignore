@@ -20,11 +20,8 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-<<<<<<< HEAD
 **/.xcode.env.local
-=======
 ios/.xcode.env.local
->>>>>>> 8b86830102f1727adcd26bd30b9e6ab09f0b43ff
 
 # Android/IntelliJ
 #
@@ -37,10 +34,7 @@ local.properties
 .cxx/
 *.keystore
 !debug.keystore
-<<<<<<< HEAD
 .kotlin/
-=======
->>>>>>> 8b86830102f1727adcd26bd30b9e6ab09f0b43ff
 
 # node.js
 #
@@ -64,11 +58,8 @@ yarn-error.log
 *.jsbundle
 
 # Ruby / CocoaPods
-<<<<<<< HEAD
 **/Pods/
-=======
 /ios/Pods/
->>>>>>> 8b86830102f1727adcd26bd30b9e6ab09f0b43ff
 /vendor/bundle/
 
 # Temporary files created by Metro to check the health of the file watcher
@@ -76,7 +67,6 @@ yarn-error.log
 
 # testing
 /coverage
-<<<<<<< HEAD
 
 # Yarn
 .yarn/*
@@ -85,5 +75,3 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-=======
->>>>>>> 8b86830102f1727adcd26bd30b9e6ab09f0b43ff

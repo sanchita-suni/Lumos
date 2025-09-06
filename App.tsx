@@ -1,58 +1,17 @@
-<<<<<<< HEAD
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React from 'react';
+import { View, Text, Button, StyleSheet, SafeAreaView, StatusBar, useColorScheme } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { ObjectDetector } from './src/components/ObjectDetector';
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import './i18n'; // Make sure this is here from your setup!
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
+const AppContent = () => {
+  const { t, i18n } = useTranslation();
   const safeAreaInsets = useSafeAreaInsets();
 
   return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-=======
-// App.tsx
-
-import React from 'react';
-import { View, Text, Button, StyleSheet, SafeAreaView, StatusBar } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { ObjectDetector } from './src/components/ObjectDetector';
-import './i18n'; // Make sure this is here from your setup!
-
-const App = () => {
-  const { t, i18n } = useTranslation();
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={'light-content'} />
-      
-      {/* This is your teammate's main component */}
+    <SafeAreaView style={[styles.container, { paddingTop: safeAreaInsets.top }]}>
+      {/* The main component from your teammate's project */}
       <ObjectDetector />
 
       {/* This is your test component at the bottom */}
@@ -68,17 +27,20 @@ const App = () => {
     </SafeAreaView>
   );
 };
->>>>>>> 8b86830102f1727adcd26bd30b9e6ab09f0b43ff
+
+const App = () => {
+  const isDarkMode = useColorScheme() === 'dark';
+  return (
+    <SafeAreaProvider>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <AppContent />
+    </SafeAreaProvider>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-<<<<<<< HEAD
-  },
-});
-
-export default App;
-=======
     backgroundColor: '#000', // Kept your teammate's background color
   },
   testBox: {
@@ -105,4 +67,3 @@ export default App;
 });
 
 export default App;
->>>>>>> 8b86830102f1727adcd26bd30b9e6ab09f0b43ff
