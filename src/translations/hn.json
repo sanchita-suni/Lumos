@@ -17,5 +17,13 @@
   "label.stop_sign": "रुकने का संकेत",
   "label.bicycle": "साइकिल",
   "label.motorcycle": "मोटरसाइकिल",
-  "label.obstacle": "बाधा"
+  "label.obstacle": "बाधा",
+  "ui.tap_to_describe": "वर्णन करने के लिए टैप करें",
+  "ui.thinking": "सोच रहा है...",
+  "ui.error_generic": "क्षमा करें, कुछ गलत हो गया।",
+  "synthesis.i_see_one_car_and_one_person": "मुझे एक गाड़ी और एक व्यक्ति दिखाई दे रहा है।",
+  "language.english": "अंग्रेज़ी",
+  "language.hindi": "हिन्दी",
+  "language.kannada": "कन्नड़"
+
 }
