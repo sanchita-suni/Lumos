@@ -17,5 +17,12 @@
   "label.stop_sign": "stop sign",
   "label.bicycle": "bicycle",
   "label.motorcycle": "motorcycle",
-  "label.obstacle": "obstacle"
+  "label.obstacle": "obstacle",
+  "ui.tap_to_describe": "Tap to Describe",
+  "ui.thinking": "Thinking...",
+  "ui.error_generic": "Sorry, something went wrong.",
+  "synthesis.i_see_one_car_and_one_person": "I see one car and one person.",
+  "language.english": "English",
+  "language.hindi": "Hindi",
+  "language.kannada": "Kannada"
 }
