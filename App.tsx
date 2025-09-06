@@ -1,23 +1,4 @@
-<<<<<<< HEAD
-import React from 'react';
-import { View, Text, Button, StyleSheet, SafeAreaView, StatusBar, useColorScheme } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { ObjectDetector } from './src/components/ObjectDetector';
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-import './i18n'; // Make sure this is here from your setup!
-
-const AppContent = () => {
-  const { t, i18n } = useTranslation();
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <SafeAreaView style={[styles.container, { paddingTop: safeAreaInsets.top }]}>
-      {/* The main component from your teammate's project */}
-      <ObjectDetector />
-=======
-// App.tsx
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -26,30 +7,33 @@ import {
   View,
   StatusBar,
   Button,
+  useColorScheme,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import './i18n'; // Make sure this is here from your setup!
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+// Correct path to i18n setup, but you will now import the initI18n function.
+import { initI18n } from './src/i18n/i18n';
 
-// Assuming these are your teammate's components and modules
+// Teammate’s component
 import { ObjectDetector } from './src/components/ObjectDetector';
-import { describeSmart } from './ai/smartSwitch';
-// You would also import from San and Tan, but we will start with the smartSwitch for now.
+// AI smart switch
+import { describeSmart } from './src/ai/smartSwitch';
 
-const App = () => {
+const AppContent = () => {
   const { t, i18n } = useTranslation();
+  const safeAreaInsets = useSafeAreaInsets();
+  const isDarkMode = useColorScheme() === 'dark';
   const [descriptionText, setDescriptionText] = useState('Tap to get a description.');
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState('en');
-  const [isConnected, setIsConnected] = useState(false);
 
-  // This is a placeholder for the function that will handle button presses.
   const handleDescribePress = async () => {
     console.log('Button pressed!');
     setIsProcessing(true);
-    // This is where you would call the describeSmart function with the image and language.
-    // Since we don't have the image from San's module yet, we will simulate the call.
+
     try {
-      const simulatedDetections = ['car', 'person', 'car']; // Placeholder from San's module
+      // Placeholder detections (replace with ObjectDetector output later)
+      const simulatedDetections = ['car', 'person', 'car'];
       const result = await describeSmart(simulatedDetections, currentLanguage);
       setDescriptionText(result);
     } catch (error) {
@@ -61,19 +45,18 @@ const App = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" />
->>>>>>> 34a1c717434dad3a3241112a0e8947330abcffb2
+    <SafeAreaView style={[styles.container, { paddingTop: safeAreaInsets.top }]}>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
 
-      {/* This is your teammate's main component, currently a placeholder */}
+      {/* Teammate’s camera component */}
       {/* <ObjectDetector /> */}
 
-      {/* This is your original UI shell component, now integrated */}
+      {/* Description text */}
       <View style={styles.content}>
-        <Text style={styles.description}>
-          {descriptionText}
-        </Text>
+        <Text style={styles.description}>{descriptionText}</Text>
       </View>
+
+      {/* Buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
@@ -83,50 +66,47 @@ const App = () => {
             {isProcessing ? 'Thinking...' : t('tap_to_describe')}
           </Text>
         </TouchableOpacity>
+
+        {/* Language switching */}
         <View style={styles.languageButtons}>
-          <Button title="English" onPress={() => i18n.changeLanguage('en')} />
-          <Button title="Hindi" onPress={() => i18n.changeLanguage('hi')} />
-          <Button title="Kannada" onPress={() => i18n.changeLanguage('kn')} />
+          <Button title="English" onPress={() => { setCurrentLanguage('en'); i18n.changeLanguage('en'); }} />
+          <Button title="Hindi" onPress={() => { setCurrentLanguage('hi'); i18n.changeLanguage('hi'); }} />
+          <Button title="Kannada" onPress={() => { setCurrentLanguage('kn'); i18n.changeLanguage('kn'); }} />
         </View>
       </View>
     </SafeAreaView>
   );
 };
-<<<<<<< HEAD
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [isI18nInitialized, setIsI18nInitialized] = useState(false);
+
+  useEffect(() => {
+    initI18n().then(() => setIsI18nInitialized(true));
+  }, []);
+
+  if (!isI18nInitialized) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <AppContent />
     </SafeAreaProvider>
   );
 };
-=======
->>>>>>> 34a1c717434dad3a3241112a0e8947330abcffb2
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-<<<<<<< HEAD
-    backgroundColor: '#000', // Kept your teammate's background color
-  },
-  testBox: {
-    position: 'absolute',
-    bottom: 50,
-    left: 20,
-    right: 20,
-=======
-    justifyContent: 'center',
+    backgroundColor: '#000', // black background
     alignItems: 'center',
-    backgroundColor: '#000',
+    justifyContent: 'center',
   },
   content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
->>>>>>> 34a1c717434dad3a3241112a0e8947330abcffb2
     padding: 20,
   },
   description: {
@@ -137,6 +117,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginBottom: 50,
+    alignItems: 'center',
   },
   button: {
     backgroundColor: '#007AFF',
@@ -162,8 +143,4 @@ const styles = StyleSheet.create({
   },
 });
 
-<<<<<<< HEAD
 export default App;
-=======
-export default App;
->>>>>>> 34a1c717434dad3a3241112a0e8947330abcffb2
