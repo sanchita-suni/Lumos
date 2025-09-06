@@ -19,3 +19,11 @@ buildscript {
 }
 
 apply plugin: "com.facebook.react.rootproject"
+allprojects {
+    configurations.all {
+        resolutionStrategy {
+            force "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+            force "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+        }
+    }
+}
