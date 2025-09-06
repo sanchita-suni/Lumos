@@ -1,23 +1,4 @@
-<<<<<<< HEAD
-import React from 'react';
-import { View, Text, Button, StyleSheet, SafeAreaView, StatusBar, useColorScheme } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { ObjectDetector } from './src/components/ObjectDetector';
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-import './i18n'; // Make sure this is here from your setup!
-
-const AppContent = () => {
-  const { t, i18n } = useTranslation();
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <SafeAreaView style={[styles.container, { paddingTop: safeAreaInsets.top }]}>
-      {/* The main component from your teammate's project */}
-      <ObjectDetector />
-=======
-// App.tsx
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -26,32 +7,42 @@ import {
   View,
   StatusBar,
   Button,
+  useColorScheme,
+  Vibration
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import './i18n'; // Make sure this is here from your setup!
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { initI18n } from './src/i18n/i18n';
 
-// Assuming these are your teammate's components and modules
+// Teammate’s component
 import { ObjectDetector } from './src/components/ObjectDetector';
-import { describeSmart } from './ai/smartSwitch';
-// You would also import from San and Tan, but we will start with the smartSwitch for now.
+// AI smart switch
+import { describeSmart } from './src/ai/smartSwitch';
 
-const App = () => {
+const AppContent = () => {
   const { t, i18n } = useTranslation();
+  const safeAreaInsets = useSafeAreaInsets();
+  const isDarkMode = useColorScheme() === 'dark';
   const [descriptionText, setDescriptionText] = useState('Tap to get a description.');
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState('en');
-  const [isConnected, setIsConnected] = useState(false);
 
-  // This is a placeholder for the function that will handle button presses.
   const handleDescribePress = async () => {
+    Vibration.vibrate(); 
     console.log('Button pressed!');
     setIsProcessing(true);
-    // This is where you would call the describeSmart function with the image and language.
-    // Since we don't have the image from San's module yet, we will simulate the call.
+
     try {
-      const simulatedDetections = ['car', 'person', 'car']; // Placeholder from San's module
-      const result = await describeSmart(simulatedDetections, currentLanguage);
-      setDescriptionText(result);
+      // Fetch a real image and convert it to a valid Base64 string
+      const response = await fetch('https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSX-Phw5O0_2nLYA9d6SHDEOLDhrhw1dS-6BtzxryiZ3uby5uS2');
+      const blob = await response.blob();
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = async () => {
+        const base64data = reader.result;
+        const result = await describeSmart(base64data, currentLanguage);
+        setDescriptionText(result);
+      };
     } catch (error) {
       console.error('Error during description:', error);
       setDescriptionText('Sorry, something went wrong.');
@@ -61,19 +52,18 @@ const App = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" />
->>>>>>> 34a1c717434dad3a3241112a0e8947330abcffb2
+    <SafeAreaView style={[styles.container, { paddingTop: safeAreaInsets.top }]}>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
 
-      {/* This is your teammate's main component, currently a placeholder */}
+      {/* Teammate’s camera component */}
       {/* <ObjectDetector /> */}
 
-      {/* This is your original UI shell component, now integrated */}
+      {/* Description text */}
       <View style={styles.content}>
-        <Text style={styles.description}>
-          {descriptionText}
-        </Text>
+        <Text style={styles.description}>{descriptionText}</Text>
       </View>
+
+      {/* Buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
@@ -83,63 +73,65 @@ const App = () => {
             {isProcessing ? 'Thinking...' : t('tap_to_describe')}
           </Text>
         </TouchableOpacity>
+
+        {/* Language switching */}
         <View style={styles.languageButtons}>
-          <Button title="English" onPress={() => i18n.changeLanguage('en')} />
-          <Button title="Hindi" onPress={() => i18n.changeLanguage('hi')} />
-          <Button title="Kannada" onPress={() => i18n.changeLanguage('kn')} />
+          <Button title="English" onPress={() => { setCurrentLanguage('en'); i18n.changeLanguage('en'); }} />
+          <Button title="Hindi" onPress={() => { setCurrentLanguage('hi'); i18n.changeLanguage('hi'); }} />
+          <Button title="Kannada" onPress={() => { setCurrentLanguage('kn'); i18n.changeLanguage('kn'); }} />
         </View>
       </View>
     </SafeAreaView>
   );
 };
-<<<<<<< HEAD
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [isI18nInitialized, setIsI18nInitialized] = useState(false);
+
+  useEffect(() => {
+    initI18n().then(() => setIsI18nInitialized(true));
+  }, []);
+
+  if (!isI18nInitialized) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <AppContent />
     </SafeAreaProvider>
   );
 };
-=======
->>>>>>> 34a1c717434dad3a3241112a0e8947330abcffb2
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-<<<<<<< HEAD
-    backgroundColor: '#000', // Kept your teammate's background color
-  },
-  testBox: {
-    position: 'absolute',
-    bottom: 50,
-    left: 20,
-    right: 20,
-=======
-    justifyContent: 'center',
+    backgroundColor: '#000', // black background
     alignItems: 'center',
-    backgroundColor: '#000',
+    justifyContent: 'center',
   },
   content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
->>>>>>> 34a1c717434dad3a3241112a0e8947330abcffb2
     padding: 20,
   },
   description: {
     fontSize: 24,
     textAlign: 'center',
-    color: 'white',
+    color: 'pink',
     fontWeight: '600',
   },
   buttonContainer: {
     marginBottom: 50,
+    alignItems: 'center',
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: 'pink',
     paddingVertical: 15,
     paddingHorizontal: 40,
     borderRadius: 30,
@@ -162,8 +154,4 @@ const styles = StyleSheet.create({
   },
 });
 
-<<<<<<< HEAD
 export default App;
-=======
-export default App;
->>>>>>> 34a1c717434dad3a3241112a0e8947330abcffb2
