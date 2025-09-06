@@ -8,7 +8,7 @@ import { Buffer } from 'buffer';
  * @returns {Promise<string>} A promise that resolves to the text description or an error message.
  */
 export async function fetchOnlineDescription(base64Image, languageCode) {
-  const apiKey = 'YOUR_GEMINI_API_KEY'; // 🔑 Replace with your actual Gemini API key
+  const apiKey = 'AIzaSyC2e5zuFFUBZeDYaFyu9bBOle_mRj2KUrM'; // 🔑 Replace with your actual Gemini API key
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=${apiKey}`;
 
 =======
