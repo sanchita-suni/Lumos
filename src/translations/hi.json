@@ -1,0 +1,21 @@
+{
+  "brand.tagline": "आवाज़ के ज़रिये दुनिया को रोशन करना।",
+  "ui.startAlerts": "अलर्ट शुरू करें",
+  "ui.stopAlerts": "अलर्ट बंद करें",
+  "ui.describe": "विवरण दें",
+  "ui.language": "भाषा",
+  "ui.currentLanguage": "वर्तमान भाषा: {{lang}}",
+  "speech.ready": "लूमोस तैयार है।",
+  "speech.detected": "{{thing}} आगे है।",
+  "speech.noObject": "कोई मुख्य वस्तु नहीं मिली।",
+  "label.vehicle": "वाहन",
+  "label.bus": "बस",
+  "label.car": "कार",
+  "label.person": "व्यक्ति",
+  "label.dog": "कुत्ता",
+  "label.traffic_light": "ट्रैफिक लाइट",
+  "label.stop_sign": "रुकने का संकेत",
+  "label.bicycle": "साइकिल",
+  "label.motorcycle": "मोटरसाइकिल",
+  "label.obstacle": "बाधा"
+}

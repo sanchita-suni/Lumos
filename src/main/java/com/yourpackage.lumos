@@ -1,0 +1,110 @@
+package com.lumos
+
+import android.os.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
+import androidx.core.content.ContextCompat
+import android.speech.tts.TextToSpeech
+import android.widget.*
+import com.google.android.material.chip.Chip
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.util.*
+
+class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
+    private lateinit var previewView: PreviewView
+    private lateinit var chipContainer: LinearLayout
+    private lateinit var fab: FloatingActionButton
+    private lateinit var tts: TextToSpeech
+    private var currentLang: Locale = Locale.ENGLISH
+    private val labels = arrayOf("person", "door", "vehicle", "stair", "pothole")
+    private var counter = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        previewView = findViewById(R.id.previewView)
+        chipContainer = findViewById(R.id.chipContainer)
+        fab = findViewById(R.id.fab)
+
+        // Language buttons
+        findViewById<Button>(R.id.btnEn).setOnClickListener { currentLang = Locale.ENGLISH }
+        findViewById<Button>(R.id.btnHi).setOnClickListener { currentLang = Locale("hi", "IN") }
+        findViewById<Button>(R.id.btnKn).setOnClickListener { currentLang = Locale("kn", "IN") }
+
+        tts = TextToSpeech(this, this)
+
+        startCamera()
+
+        // Simulate label updates every second
+        val handler = Handler(Looper.getMainLooper())
+        val runnable = object : Runnable {
+            override fun run() {
+                updateChips(arrayOf(labels[counter % labels.size]))
+                counter++
+                handler.postDelayed(this, 1000)
+            }
+        }
+        handler.post(runnable)
+
+        fab.setOnClickListener {
+            val sentence = "Detected ${labels[counter % labels.size]}"
+            speak(sentence)
+        }
+    }
+
+    private fun startCamera() {
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+        cameraProviderFuture.addListener({
+            val cameraProvider = cameraProviderFuture.get()
+            val preview = androidx.camera.core.Preview.Builder().build().also {
+                it.setSurfaceProvider(previewView.surfaceProvider)
+            }
+            val cameraSelector = androidx.camera.core.CameraSelector.DEFAULT_BACK_CAMERA
+            try {
+                cameraProvider.unbindAll()
+                cameraProvider.bindToLifecycle(this, cameraSelector, preview)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }, ContextCompat.getMainExecutor(this))
+    }
+
+    private fun updateChips(newLabels: Array<String>) {
+        chipContainer.removeAllViews()
+        for (label in newLabels) {
+            val chip = Chip(this)
+            chip.text = label
+            chip.isCheckable = false
+            chipContainer.addView(chip)
+        }
+    }
+
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            tts.language = currentLang
+        }
+    }
+
+    private fun speak(text: String) {
+        tts.language = currentLang
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+        vibrate()
+    }
+
+    private fun vibrate() {
+        val vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(100)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        tts.shutdown()
+    }
+}
+
